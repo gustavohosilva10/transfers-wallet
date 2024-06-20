@@ -1,0 +1,59 @@
+version: '3.9'
+services:
+  wallet-api:
+    container_name: wallet
+    image: hyperf/hyperf:8.1-alpine-v3.13-swoole
+    working_dir: /app
+    entrypoint: ["php", "bin/hyperf.php", "server:watch"]
+    volumes:
+      - ./:/app
+    ports:
+      - 9501:9501
+    privileged: true
+    user: root
+    networks:
+      - hyperf-network
+      - app-network
+
+  mysqlserver:
+    container_name: mysqlserver
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "MySql2024!"
+      MYSQL_DATABASE: "test"
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - hyperf-network
+      - app-network
+
+  mysqlservertest:
+    container_name: mysqlservertest
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "MySql2024!"
+      MYSQL_DATABASE: "database_test"
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./mysql_data_test:/var/lib/mysql
+    networks:
+      - hyperf-network
+      - app-network
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - hyperf-network
+      - app-network
+networks:
+  hyperf-network:
+  app-network:

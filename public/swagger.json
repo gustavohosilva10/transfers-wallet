@@ -1,0 +1,122 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Transferências",
+        "description": "Esta é a documentação da API de Transferências.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/transfer": {
+            "post": {
+                "tags": [
+                    "Transferências"
+                ],
+                "summary": "Realiza uma transferência",
+                "description": "Este endpoint realiza uma transferência entre usuários.",
+                "operationId": "transfer",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TransferRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Transferência realizada com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro na transferência"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Registra um novo usuário",
+                "description": "Este endpoint registra um novo usuário.",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário registrado com sucesso"
+                    },
+                    "400": {
+                        "description": "Erro no registro"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StoreUserRequest": {
+                "required": [
+                    "name",
+                    "document",
+                    "email"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "document": {
+                        "type": "string",
+                        "example": "12345678901"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "johndoe@example.com"
+                    }
+                },
+                "type": "object"
+            },
+            "TransferRequest": {
+                "required": [
+                    "value",
+                    "payer",
+                    "payeer"
+                ],
+                "properties": {
+                    "value": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 100.5
+                    },
+                    "payer": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "payeer": {
+                        "type": "integer",
+                        "example": 2
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Transferências",
+            "description": "Endpoints relacionados a transferências"
+        }
+    ]
+}
